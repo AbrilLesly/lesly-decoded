@@ -140,6 +140,7 @@ img { max-width: 100%; display: block; }
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 100;
     flex-direction: column;
     background: var(--bg);
     padding: 32px 28px;
