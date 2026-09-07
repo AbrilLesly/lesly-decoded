@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favorites — Lesly</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="wrap">
+    <a href="index.html" class="brand">Lesly</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="weekend.html">Weekend</a></li>
+      <li><a href="interests.html">Interests</a></li>
+      <li><a href="favorites.html" class="current">Favorites</a></li>
+      <li><a href="dream-place.html">Dream Place</a></li>
+      <li><a href="values.html">Values</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-head wrap">
+  <p class="eyebrow">04 — Favorites</p>
+  <h1>Color, music, <em>two movies</em>.</h1>
+  <p class="lede">Short list. Strongly held opinions.</p>
+</header>
+
+<section class="block wrap">
+  <h2>Favorite color</h2>
+  <div class="color-swatch" aria-hidden="true" style="border:1px solid rgba(255,255,255,0.18); box-shadow:0 0 24px rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.03);"></div>
+  <div class="prose">
+    <p>Black. Not because it's "edgy," just because everything looks better in it.</p>
+  </div>
+</section>
+
+<section class="block wrap">
+  <h2>Music</h2>
+  <div class="prose">
+    <p>My playlist is a mix of late-night thoughts, old memories, quiet moments, main-character energy, and songs I probably should have stopped listening to years ago. I like music that feels dreamy and emotional, but I also need a little chaos, confidence, and something I can dance to.</p>
+  </div>
+  <div class="tag-row" id="music-pills">
+    <button type="button" class="pill" data-track="3zU9rdflI65tK4dkkNSp77">Heroes (We Could Be)</button>
+    <button type="button" class="pill" data-track="4Pbg79cTBu4vgSphoyNq3j">2002 — Anne-Marie</button>
+    <button type="button" class="pill" data-artist="0EmeFodog0BfCgMzAIvKQp">Shakira</button>
+    <button type="button" class="pill" data-track="7DFNE7NO0raLIUbgzY2rzm">Let Her Go — Passenger</button>
+    <button type="button" class="pill" data-track="05rWggLwQ2weA4D2cRAt55">Far Away</button>
+    <button type="button" class="pill" data-track="3oL3XRtkP1WVbMxf7dtTdu">The One That Got Away</button>
+    <button type="button" class="pill" data-track="5rlMVKnvE6ZSzNCs8ZyHqU">For You</button>
+    <button type="button" class="pill" data-track="0m6TrXRLlNFLkOGiW38kDf">Capital Letters</button>
+    <button type="button" class="pill" data-track="2afCBiru10AFckfOa49wIa">You &amp; I</button>
+    <button type="button" class="pill" data-track="6L5udBtIPqieULPMac3wkh">Do I Have to Cry for You</button>
+  </div>
+  <div class="music-player" id="music-player" hidden>
+    <iframe id="music-player-frame" src="" width="100%" height="152" style="border-radius:12px;" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
+</section>
+
+<section class="block wrap">
+  <h2>Food</h2>
+  <div class="prose">
+    <p>Not really a food person, but adobo and sinigang are the exceptions. Favorite fruits are pineapple and ripe mangoes. No eggs, ever. And if it's sweet, I'm out, give me salty, sour, or spicy any day.</p>
+  </div>
+</section>
+
+<section class="block wrap">
+  <h2>Movies</h2>
+  <div class="prose">
+    <p>Not really a movie person, but <em class="accent-italic">Home Alone</em> and <em class="accent-italic">The Lord of the Rings</em> are the exceptions that always pull me back in.</p>
+  </div>
+  <div class="photo-strip">
+    <figure>
+      <img src="images/home-alone.jpg" alt="Home Alone movie poster">
+    </figure>
+    <figure>
+      <img src="images/lord-of-the-rings.jpg" alt="The Lord of the Rings movie poster">
+    </figure>
+  </div>
+</section>
+
+<nav class="page-nav wrap">
+  <div class="links">
+    <a class="prev" href="interests.html"><span class="dir">← Back to</span>Interests</a>
+    <a class="next" href="dream-place.html"><span class="dir">Next →</span>Dream Place</a>
+  </div>
+</nav>
+
+<footer class="site-foot">
+  <div class="wrap">This exists so I don't have to explain myself six times a month. You're welcome.</div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+(function () {
+  var pillsWrap = document.getElementById('music-pills');
+  var player = document.getElementById('music-player');
+  var frame = document.getElementById('music-player-frame');
+  if (!pillsWrap || !player || !frame) return;
+
+  var activePill = null;
+
+  pillsWrap.addEventListener('click', function (e) {
+    var pill = e.target.closest('.pill');
+    if (!pill) return;
+    var trackId = pill.getAttribute('data-track');
+    var artistId = pill.getAttribute('data-artist');
+    if (!trackId && !artistId) return;
+
+    if (activePill === pill) {
+      player.hidden = true;
+      frame.src = 'about:blank';
+      frame.style.height = '152px';
+      activePill.classList.remove('is-playing');
+      activePill = null;
+      return;
+    }
+
+    if (activePill) activePill.classList.remove('is-playing');
+    pill.classList.add('is-playing');
+    activePill = pill;
+
+    var newSrc;
+    if (artistId) {
+      newSrc = 'https://open.spotify.com/embed/artist/' + artistId + '?utm_source=generator';
+      frame.style.height = '352px';
+    } else {
+      newSrc = 'https://open.spotify.com/embed/track/' + trackId + '?utm_source=generator&autoplay=1';
+      frame.style.height = '152px';
+    }
+
+    // Force a full reload of the embed so it always starts from the beginning,
+    // instead of the browser reusing a cached frame and resuming mid-track.
+    frame.src = 'about:blank';
+    player.hidden = false;
+    setTimeout(function () {
+      frame.src = newSrc;
+    }, 50);
+
+    player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+</body>
+</html>
