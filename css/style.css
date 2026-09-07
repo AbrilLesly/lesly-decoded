@@ -157,8 +157,8 @@ img { max-width: 100%; display: block; }
     width: 100%;
   }
   .nav-links a.current {
-    color: var(--gold);
-    border-bottom-color: var(--gold);
+    color: var(--rose);
+    border-bottom-color: var(--rose);
   }
 }
 
