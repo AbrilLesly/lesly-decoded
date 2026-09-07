@@ -33,7 +33,9 @@
 
 <section class="block wrap">
   <h2>Favorite color</h2>
-  <div class="color-swatch" aria-hidden="true" style="border:1px solid rgba(255,255,255,0.18); box-shadow:0 0 24px rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.03);"></div>
+  <div class="color-swatch" aria-hidden="true" style="border:1px solid rgba(255,255,255,0.18); box-shadow:0 0 24px rgba(255,255,255,0.06), inset 0 0 0 1px rgba(255,255,255,0.03); display:flex; align-items:center; justify-content:center;">
+    <span style="font-family: var(--serif); font-weight:600; font-size:32px; letter-spacing:4px; color:#ffffff;">BLACK</span>
+  </div>
   <div class="prose">
     <p>Black. Not because it's "edgy," just because everything looks better in it.</p>
   </div>
@@ -113,7 +115,7 @@
 
     if (activePill === pill) {
       player.hidden = true;
-      frame.src = 'about:blank';
+      frame.src = '';
       frame.style.height = '152px';
       activePill.classList.remove('is-playing');
       activePill = null;
@@ -124,23 +126,14 @@
     pill.classList.add('is-playing');
     activePill = pill;
 
-    var newSrc;
     if (artistId) {
-      newSrc = 'https://open.spotify.com/embed/artist/' + artistId + '?utm_source=generator';
+      frame.src = 'https://open.spotify.com/embed/artist/' + artistId + '?utm_source=generator';
       frame.style.height = '352px';
     } else {
-      newSrc = 'https://open.spotify.com/embed/track/' + trackId + '?utm_source=generator&autoplay=1';
+      frame.src = 'https://open.spotify.com/embed/track/' + trackId + '?utm_source=generator&autoplay=1';
       frame.style.height = '152px';
     }
-
-    // Force a full reload of the embed so it always starts from the beginning,
-    // instead of the browser reusing a cached frame and resuming mid-track.
-    frame.src = 'about:blank';
     player.hidden = false;
-    setTimeout(function () {
-      frame.src = newSrc;
-    }, 50);
-
     player.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 })();
